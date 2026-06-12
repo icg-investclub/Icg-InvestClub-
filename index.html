@@ -3,329 +3,164 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ICG Investment Club</title>
+<title>Business Breakfast ICG – Club Investisseurs</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600&display=swap');
-
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
     --dark: #0D1B2A; --gold: #C9963A; --gold-lt: #E8C47A;
     --white: #FFFFFF; --muted: #8A9BB0; --green: #2ECC71;
   }
-
   body {
     font-family: 'Inter', sans-serif;
-    background: linear-gradient(160deg, #0D1B2A 0%, #0A1520 100%);
-    color: var(--white);
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 32px 20px;
+    background: var(--dark); color: var(--white);
+    min-height: 100vh; display: flex;
+    align-items: center; justify-content: center; padding: 24px;
   }
-
-  .page {
-    width: 100%;
-    max-width: 420px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0;
+  .card {
+    width: 100%; max-width: 560px;
+    background: linear-gradient(160deg, #122030 0%, #0D1B2A 60%, #0A1520 100%);
+    border: 1px solid rgba(201,150,58,0.25);
+    border-radius: 4px; overflow: hidden; position: relative;
   }
-
-  /* Logo */
-  .logo-wrap {
-    margin-bottom: 16px;
+  .card::before {
+    content: ''; display: block; height: 4px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-lt), var(--gold));
   }
-
-  /* Nom & tagline */
-  .club-name {
-    font-family: 'Playfair Display', serif;
-    font-size: 22px;
-    font-weight: 900;
-    color: var(--white);
-    text-align: center;
-    margin-bottom: 6px;
-    letter-spacing: 0.02em;
+  .card::after {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 80% 10%, rgba(201,150,58,0.06) 0%, transparent 60%);
+    pointer-events: none;
   }
+  .inner { padding: 40px 36px 36px; position: relative; z-index: 1; }
 
-  .club-name span { color: var(--gold-lt); }
-
-  .tagline {
-    font-size: 12px;
-    color: var(--muted);
-    text-align: center;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: 6px;
+  .eyebrow {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 14px;
   }
-
-  /* Badge événement */
-  .event-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: rgba(201,150,58,0.12);
-    border: 1px solid rgba(201,150,58,0.35);
-    border-radius: 20px;
-    padding: 6px 14px;
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--gold-lt);
-    margin-bottom: 28px;
-    letter-spacing: 0.05em;
+  h1 {
+    font-family: 'Playfair Display', serif; font-size: 30px;
+    font-weight: 900; line-height: 1.15; color: var(--white); margin-bottom: 8px;
   }
-
-  .event-badge::before {
-    content: '';
-    width: 7px; height: 7px;
-    border-radius: 50%;
-    background: var(--green);
-    animation: pulse 1.5s infinite;
+  h1 span { color: var(--gold-lt); }
+  .subtitle {
+    font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 28px;
   }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
-  }
-
-  /* Divider */
   .divider {
-    width: 100%;
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(201,150,58,0.3), transparent);
+    background: linear-gradient(90deg, rgba(201,150,58,0.4), transparent);
     margin-bottom: 24px;
   }
-
-  /* Boutons */
-  .links {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-bottom: 28px;
+  .section-label {
+    font-size: 9px; font-weight: 600; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 14px;
   }
 
-  .btn {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    width: 100%;
-    padding: 16px 20px;
-    border-radius: 3px;
-    text-decoration: none;
-    transition: opacity 0.2s;
-    border: 1px solid transparent;
+  /* Programme */
+  .prog-list {
+    display: flex; flex-direction: column;
+    border: 1px solid rgba(201,150,58,0.2);
+    border-radius: 3px; overflow: hidden; margin-bottom: 28px;
   }
-
-  .btn:hover { opacity: 0.85; }
-
-  .btn-icon {
-    font-size: 20px;
-    width: 32px;
-    text-align: center;
-    flex-shrink: 0;
-  }
-
-  .btn-text { flex: 1; }
-  .btn-text strong { display: block; font-size: 13px; font-weight: 700; margin-bottom: 2px; }
-  .btn-text span { font-size: 11px; opacity: 0.75; }
-
-  .btn-arrow { font-size: 14px; opacity: 0.6; }
-
-  /* Styles boutons */
-  .btn-primary {
-    background: linear-gradient(135deg, var(--gold), var(--gold-lt));
-    color: var(--dark);
-  }
-  .btn-primary .btn-text span { opacity: 0.6; }
-
-  .btn-offert {
-    background: rgba(46,204,113,0.08);
-    border-color: rgba(46,204,113,0.35);
-    color: var(--white);
-  }
-  .btn-offert .btn-text strong { color: var(--green); }
-
-  .btn-outline {
-    background: rgba(201,150,58,0.06);
-    border-color: rgba(201,150,58,0.25);
-    color: var(--white);
-  }
-  .btn-outline .btn-text strong { color: var(--gold-lt); }
-
-  .btn-ghost {
-    background: rgba(255,255,255,0.04);
-    border-color: rgba(255,255,255,0.1);
-    color: var(--white);
-  }
-
-  /* Section programme */
-  .programme {
-    width: 100%;
-    background: rgba(201,150,58,0.05);
-    border: 1px solid rgba(201,150,58,0.15);
-    border-radius: 3px;
-    padding: 18px 20px;
-    margin-bottom: 28px;
-  }
-
-  .prog-title {
-    font-size: 9px;
-    font-weight: 600;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 12px;
-    text-align: center;
-  }
-
-  .prog-list { display: flex; flex-direction: column; gap: 8px; }
-
   .prog-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-size: 12px;
+    display: flex; align-items: center; gap: 14px;
+    padding: 10px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
   }
-
+  .prog-item:last-child { border-bottom: none; }
+  .prog-item.highlight {
+    background: rgba(201,150,58,0.12);
+    border-left: 3px solid var(--gold);
+  }
   .prog-time {
-    font-weight: 700;
-    color: var(--gold-lt);
-    min-width: 38px;
-    flex-shrink: 0;
+    font-size: 12px; font-weight: 700; color: var(--gold-lt);
+    min-width: 42px; flex-shrink: 0;
   }
+  .prog-desc { font-size: 12px; color: var(--white); opacity: 0.85; line-height: 1.4; }
+  .prog-item.highlight .prog-desc { opacity: 1; font-weight: 600; }
 
-  .prog-desc { color: var(--white); opacity: 0.8; }
-  .prog-item.highlight .prog-desc { opacity: 1; font-weight: 600; color: var(--gold-lt); }
+  /* Espaces */
+  .espaces { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+
+  .espace {
+    border-radius: 3px; padding: 16px 18px;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .espace.gratuit { border-color: rgba(46,204,113,0.35); background: rgba(46,204,113,0.06); }
+  .espace.payant { border-color: rgba(201,150,58,0.45); background: rgba(201,150,58,0.1); }
+
+  .espace-header {
+    display: flex; justify-content: space-between;
+    align-items: center; margin-bottom: 6px;
+  }
+  .espace-name { font-size: 13px; font-weight: 700; color: var(--white); }
+  .tag-gratuit {
+    font-size: 9px; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--green);
+    border: 1px solid rgba(46,204,113,0.5);
+    padding: 3px 8px; border-radius: 2px;
+  }
+  .tag-payant {
+    font-size: 9px; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--gold-lt);
+    border: 1px solid rgba(201,150,58,0.5);
+    padding: 3px 8px; border-radius: 2px;
+  }
+  .espace-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+  .espace.payant .espace-desc { color: var(--white); opacity: 0.8; }
+
+  /* CTA */
+  .cta-section { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
+  .cta-primary {
+    display: block;
+    background: linear-gradient(135deg, var(--gold), var(--gold-lt));
+    color: var(--dark); text-align: center; padding: 14px 20px;
+    font-size: 13px; font-weight: 700; letter-spacing: 0.05em;
+    text-transform: uppercase; border-radius: 2px; text-decoration: none;
+  }
+  .cta-secondary {
+    display: block; background: transparent;
+    border: 1px solid rgba(46,204,113,0.4); color: var(--green);
+    text-align: center; padding: 12px 20px; font-size: 12px;
+    font-weight: 600; border-radius: 2px; text-decoration: none;
+  }
 
   /* Footer */
-  .footer {
-    text-align: center;
+  .contact-row {
+    display: flex; gap: 16px; flex-wrap: wrap; align-items: center;
+    padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.07);
   }
-
-  .footer p {
-    font-size: 11px;
-    color: var(--muted);
-    margin-bottom: 6px;
+  .contact-item { display: flex; align-items: center; gap: 7px; font-size: 11px; color: var(--muted); }
+  .contact-item .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
+  .location-tag {
+    margin-left: auto; font-size: 10px; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); opacity: 0.8;
   }
-
-  .footer-contacts {
-    display: flex;
-    justify-content: center;
-    gap: 16px;
-    margin-bottom: 12px;
-  }
-
-  .footer-contacts a {
-    font-size: 12px;
-    color: var(--gold-lt);
-    text-decoration: none;
-    font-weight: 500;
-  }
-
-  .footer-site {
-    font-size: 10px;
-    color: var(--muted);
-    letter-spacing: 0.1em;
-  }
-
-  .footer-site a { color: var(--muted); text-decoration: none; }
 </style>
 </head>
 <body>
-<div class="page">
+<div class="card">
+  <div class="inner">
 
-  <!-- Logo -->
-  <div class="logo-wrap">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 160" width="220" height="117">
-      <defs>
-        <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" style="stop-color:#C9963A;stop-opacity:1" />
-          <stop offset="100%" style="stop-color:#E8C47A;stop-opacity:1" />
-        </linearGradient>
-        <linearGradient id="darkGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" style="stop-color:#122030;stop-opacity:1" />
-          <stop offset="100%" style="stop-color:#0D1B2A;stop-opacity:1" />
-        </linearGradient>
-      </defs>
-      <rect width="300" height="160" fill="url(#darkGrad)" rx="6"/>
-      <g transform="translate(18, 20)">
-        <polygon points="45,10 75,70 15,70" fill="none" stroke="url(#goldGrad)" stroke-width="2.5" stroke-linejoin="round"/>
-        <polygon points="62,30 80,70 44,70" fill="none" stroke="url(#goldGrad)" stroke-width="1.5" stroke-linejoin="round" opacity="0.5"/>
-        <polyline points="38,28 45,10 52,28" fill="none" stroke="#E8C47A" stroke-width="1.5" stroke-linejoin="round"/>
-      </g>
-      <text x="118" y="52" font-family="Georgia, serif" font-size="38" font-weight="bold" fill="url(#goldGrad)" letter-spacing="6">ICG</text>
-      <line x1="115" y1="62" x2="272" y2="62" stroke="url(#goldGrad)" stroke-width="0.8" opacity="0.5"/>
-      <text x="118" y="95" font-family="Arial, sans-serif" font-size="15" font-weight="600" fill="#FFFFFF" letter-spacing="4">INVESTMENT</text>
-      <text x="118" y="120" font-family="Arial, sans-serif" font-size="13" font-weight="400" fill="#E8C47A" letter-spacing="8">CLUB</text>
-      <line x1="115" y1="130" x2="272" y2="130" stroke="url(#goldGrad)" stroke-width="0.8" opacity="0.3"/>
-      <text x="118" y="148" font-family="Arial, sans-serif" font-size="8" font-weight="400" fill="#8A9BB0" letter-spacing="3">ABIDJAN · CÔTE D'IVOIRE</text>
-    </svg>
-  </div>
+    <p class="eyebrow">Business Breakfast ICG · Samedi 7 juillet · 8h00</p>
+    <h1>Investissons ensemble.<br><span>Gagnez en avance.</span></h1>
+    <p class="subtitle">Un événement exclusif réunissant 50 décideurs, entrepreneurs et investisseurs actifs d'Abidjan. Conférence gratuite, session privée d'investissement sur invitation.</p>
 
-  <!-- Badge événement -->
-  <div class="event-badge">Business Breakfast · Samedi 7 juillet · 8h00</div>
+    <div class="divider"></div>
 
-  <div class="divider"></div>
-
-  <!-- Liens -->
-  <div class="links">
-
-    <a href="https://whatsform.com/ybt0rm" target="_blank" class="btn btn-offert">
-      <span class="btn-icon">🎤</span>
-      <span class="btn-text">
-        <strong>S'inscrire à la conférence</strong>
-        <span>Gratuit · OFFERT · Places limitées</span>
-      </strong>
-      <span class="btn-arrow">→</span>
-    </a>
-
-    <a href="https://whatsform.com/ybt0rm" target="_blank" class="btn btn-primary">
-      <span class="btn-icon">💼</span>
-      <span class="btn-text">
-        <strong>Rejoindre la session privée</strong>
-        <span>Club Investisseurs · 50 000 FCFA · 30 places</span>
-      </span>
-      <span class="btn-arrow">→</span>
-    </a>
-
-    <a href="https://wa.me/2250596314669" target="_blank" class="btn btn-outline">
-      <span class="btn-icon">🤝</span>
-      <span class="btn-text">
-        <strong>Devenir partenaire sponsor</strong>
-        <span>À partir de 200 000 FCFA</span>
-      </span>
-      <span class="btn-arrow">→</span>
-    </a>
-
-    <a href="https://www.icg-suit.tech" target="_blank" class="btn btn-ghost">
-      <span class="btn-icon">🌍</span>
-      <span class="btn-text">
-        <strong>Découvrir la plateforme ICG</strong>
-        <span>www.icg-suit.tech</span>
-      </span>
-      <span class="btn-arrow">→</span>
-    </a>
-
-  </div>
-
-  <!-- Programme -->
-  <div class="programme">
-    <p class="prog-title">Programme du 7 juillet</p>
+    <p class="section-label">Programme du 7 juillet</p>
     <div class="prog-list">
       <div class="prog-item">
         <span class="prog-time">8h00</span>
-        <span class="prog-desc">Accueil & petit déjeuner</span>
+        <span class="prog-desc">Accueil & petit déjeuner — ouvert à tous</span>
       </div>
       <div class="prog-item">
         <span class="prog-time">8h30</span>
-        <span class="prog-desc">Tour de table & ouverture</span>
+        <span class="prog-desc">Tour de table & ouverture officielle</span>
       </div>
       <div class="prog-item highlight">
         <span class="prog-time">8h45</span>
-        <span class="prog-desc">Conférence ICG & opportunité</span>
+        <span class="prog-desc">Conférence — ICG & opportunité d'investissement</span>
       </div>
       <div class="prog-item">
         <span class="prog-time">9h45</span>
@@ -333,29 +168,72 @@
       </div>
       <div class="prog-item">
         <span class="prog-time">10h15</span>
-        <span class="prog-desc">Pause · jus frais & networking</span>
+        <span class="prog-desc">Pause — jus frais & networking</span>
       </div>
       <div class="prog-item highlight">
         <span class="prog-time">10h45</span>
-        <span class="prog-desc">Session privée Club Investisseurs</span>
+        <span class="prog-desc">Session privée — Club Investisseurs ICG</span>
       </div>
       <div class="prog-item">
         <span class="prog-time">11h30</span>
         <span class="prog-desc">Clôture</span>
       </div>
     </div>
-  </div>
 
-  <!-- Footer -->
-  <div class="footer">
-    <p>Riviera Palmeraie · Abidjan · Côte d'Ivoire</p>
-    <div class="footer-contacts">
-      <a href="tel:+22501004836 79">+225 01 00 48 36 79</a>
-      <a href="tel:+2250596314669">+225 05 96 31 46 69</a>
+    <p class="section-label">Choisissez votre espace</p>
+    <div class="espaces">
+
+      <div class="espace gratuit">
+        <div class="espace-header">
+          <span class="espace-name">🎤 Conférence + Petit déjeuner</span>
+          <span class="tag-gratuit">OFFERT</span>
+        </div>
+        <p class="espace-desc">Accès à la conférence ICG, au petit déjeuner et aux échanges. Inscription obligatoire — places limitées.</p>
+      </div>
+
+      <div class="espace payant">
+        <div class="espace-header">
+          <span class="espace-name">💼 Session Privée — Club Investisseurs</span>
+          <span class="tag-payant">50 000 FCFA</span>
+        </div>
+        <p class="espace-desc">
+          <strong style="display:block; margin-bottom:8px; color:#E8C47A;">5 étapes clés :</strong>
+          1️⃣ Accès à la session privée<br/>
+          2️⃣ Découvre le portefeuille ICG Négoce<br/>
+          3️⃣ La garantie<br/>
+          4️⃣ Le capital minimum requis<br/>
+          5️⃣ Obtiens la lettre d'intention & co-investissons ensemble
+        </p>
+      </div>
+
     </div>
-    <p class="footer-site"><a href="https://www.icg-suit.tech">www.icg-suit.tech</a></p>
-  </div>
 
+    <div class="cta-section">
+      <a class="cta-primary" href="https://whatsform.com/ybt0rm" target="_blank">Rejoindre la session privée — 50 000 FCFA</a>
+      <a class="cta-secondary" href="https://whatsform.com/ybt0rm" target="_blank">Inscription gratuite à la conférence →</a>
+    </div>
+
+    <div class="contact-row">
+      <div class="contact-item"><div class="dot"></div>+225 01 00 48 36 79</div>
+      <div class="contact-item"><div class="dot"></div>+225 05 96 31 46 69</div>
+      <span class="location-tag">Riviera Palmeraie</span>
+    </div>
+
+    <div style="margin-top: 20px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.06);">
+      <p style="font-size: 9px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(201,150,58,0.6); margin-bottom: 12px; text-align: center;">Partenaires de l'événement</p>
+      <div style="display: flex; justify-content: center; align-items: center; gap: 24px; min-height: 36px;">
+        <span style="font-size: 11px; color: rgba(138,155,176,0.4); font-style: italic;">Votre logo ici</span>
+        <span style="font-size: 11px; color: rgba(138,155,176,0.4); font-style: italic;">Votre logo ici</span>
+      </div>
+    </div>
+
+    <div style="margin-top: 14px; text-align: center;">
+      <a href="icg_sponsoring.html" style="font-size: 11px; color: var(--muted); text-decoration: none; border-bottom: 1px solid rgba(138,155,176,0.3); padding-bottom: 2px; letter-spacing: 0.05em;">
+        Vous êtes une entreprise ? Devenir partenaire sponsor →
+      </a>
+    </div>
+
+  </div>
 </div>
 </body>
 </html>
